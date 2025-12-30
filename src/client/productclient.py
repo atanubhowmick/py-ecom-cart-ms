@@ -15,18 +15,18 @@ class ProductClient:
         async with httpx.AsyncClient() as client:
             try:
                 response = await client.get(url)
-                
+                logger.info("Product client response status code = %s", response.status_code)
                 if response.status_code == 200:
                     # Parse the JSON response
-                    # Expected format: {"isSuccess": true, "payload": {...}}
                     json_data = response.json()
-                    
-                    if json_data.get("isSuccess"):
+                    logger.debug("Json response from product-ms: %s", json_data)
+                        
+                    if json_data.get("is_success"):
                         payload = json_data.get("payload")
                         # Convert dict to Pydantic Object
                         return ProductDetails(**payload)
                 
-                logger.warning(f"Product MS returned {response.status_code} for ID {product_id}")
+                logger.warning(f"product-ms returned {response.status_code} for ID {product_id}")
                 return None
 
             except Exception as e:

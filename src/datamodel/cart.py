@@ -8,7 +8,7 @@ class ProductDetails(BaseModel):
     details: str
     price: float
     available_qty: int
-    quantity: int
+    quantity: int = 0
 
     # Override this method to define custom string representation like toString() method in Java
     def __str__(self):
